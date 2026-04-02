@@ -12,8 +12,13 @@ var ctx;
 var paddlex;
 var paddleh;
 var paddlew;
+var paddlex2;
+var paddleh2;
+var paddlew2;
 var rightDown = false;
 var leftDown = false;
+var rightDown2 = false;
+var leftDown2 = false;
 var bricks;
 var NROWS;
 var NCOLS;
@@ -21,40 +26,40 @@ var BRICKWIDTH;
 var BRICKHEIGHT;
 var PADDING;
 
-function initbricks() { //inicializacija opek - polnjenje v tabelo
-  NROWS = 5;
-  NCOLS = 5;
-  BRICKWIDTH = (WIDTH/NCOLS) - 1;
-  BRICKHEIGHT = 15;
-  PADDING = 1;
-  bricks = new Array(NROWS);
-  for (i=0; i < NROWS; i++) {
-    bricks[i] = new Array(NCOLS);
-    for (j=0; j < NCOLS; j++) {
-      bricks[i][j] = 1;
-    }
-  }
-}
+
 
 //nastavljanje leve in desne tipke
 function onKeyDown(evt) {
   if (evt.keyCode == 39)
 rightDown = true;
+else if(evt.keyCode ==68)
+	rightDown2 = true;
   else if (evt.keyCode == 37) leftDown = true;
+  else if(evt.keyCode == 65) leftDown2 = true;
 }
 
 function onKeyUp(evt) {
   if (evt.keyCode == 39)
 rightDown = false;
+	else if(evt.keyCode ==68)
+	rightDown2 = false;
   else if (evt.keyCode == 37) leftDown = false;
+  else if(evt.keyCode == 65) leftDown2 = false;
 }
 $(document).keydown(onKeyDown);
 $(document).keyup(onKeyUp); 
 
 function init_paddle() {
-  paddlex = WIDTH / 2;
+  
   paddleh = 10;
   paddlew = 75;
+  paddlex = 0;
+}
+function init_paddle2() {
+  
+  paddleh2 = 10;
+  paddlew2 = 75;
+  paddlex2 = WIDTH -paddlew;
 }
 function init() {
   ctx = $('#canvas')[0].getContext("2d");
@@ -96,34 +101,39 @@ paddlex -=5;
 paddlex=0;
 }
 }
-rect(paddlex, HEIGHT-paddleh, paddlew, paddleh);
-
-//riši opeke
-  for (i=0; i < NROWS; i++) {
-    for (j=0; j < NCOLS; j++) {
-      if (bricks[i][j] == 1) {
-        rect((j * (BRICKWIDTH + PADDING)) + PADDING,
-            (i * (BRICKHEIGHT + PADDING)) + PADDING,
-            BRICKWIDTH, BRICKHEIGHT);
-      }
-    }
-  }
-
-  rowheight = BRICKHEIGHT + PADDING + r/2; //Smo zadeli opeko?
-  colwidth = BRICKWIDTH + PADDING + r/2;
-  row = Math.floor(y/rowheight);
-  col = Math.floor(x/colwidth);
-  //Če smo zadeli opeko, vrni povratno kroglo in označi v tabeli, da opeke ni več
-if (y < NROWS * rowheight && row >= 0 && col >= 0 && bricks[row][col] == 1) {
-dy = -dy; bricks[row][col] = 0;
+  if(rightDown2){
+if((paddlex2+paddlew2) < WIDTH){
+paddlex2 += 5;
+}else{
+paddlex2 = WIDTH-paddlew2;
 }
+}
+else if(leftDown2){
+if(paddlex2>0){
+paddlex2 -=5;
+}else{
+paddlex2=0;
+}
+}
+rect(paddlex, HEIGHT-paddleh, paddlew, paddleh);
+rect(paddlex2, HEIGHT-paddleh2, paddlew2, paddleh2);
+
   if (x + dx > WIDTH -r || x + dx < 0+r)
     dx = -dx;
   if (y + dy < 0+r)
     dy = -dy;
-  else if (y + dy > HEIGHT -(r+paddleh)) {
+  if (y + dy > HEIGHT -(r+paddleh)) {
     if (x > paddlex && x < paddlex + paddlew){
 		 dx = 8 * ((x-(paddlex+paddlew/2))/paddlew);
+      dy = -dy;
+	}
+      
+    else if (y + dy > HEIGHT-r)
+      clearInterval(intervalId);
+  }
+  if (y + dy > HEIGHT -(r+paddleh2)) {
+    if (x > paddlex2 && x < paddlex2 + paddlew2){
+		 dx = 8 * ((x-(paddlex2+paddlew2/2))/paddlew2);
       dy = -dy;
 	}
       
@@ -135,7 +145,6 @@ dy = -dy; bricks[row][col] = 0;
 }
 
 init();
-initbricks();
 init_paddle();
-
+init_paddle2();
 }
