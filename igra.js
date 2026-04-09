@@ -7,7 +7,7 @@ var dx = 2;
 var dy = 4;
 var WIDTH;
 var HEIGHT;
-var r=10;
+var r=8;
 var ctx;
 var paddlex;
 var paddleh;
@@ -145,6 +145,16 @@ rect((WIDTH/2)-mrezaW/2,HEIGHT-mrezaH,mrezaW,mrezaH,"black");
   else if (y + dy > HEIGHT - r) {
     clearInterval(intervalId);
   }
+}
+if(x>WIDTH/2-mrezaW/2&&x<WIDTH/2 && y>HEIGHT-mrezaH){
+	dx = 0; 
+	dy = 0;
+	
+	
+}
+else if(x>WIDTH&&x<WIDTH/2+mrezaW/2&& y>HEIGHT-mrezaH){
+	dx =0;
+	dy = 0;
 }
   x += dx;
   y += dy;
