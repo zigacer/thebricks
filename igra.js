@@ -27,7 +27,8 @@ var BRICKHEIGHT;
 var PADDING;
 var color1 = "blue"; 
 var color2 = "red";
-
+var mrezaW = 30; 
+var mrezaH = 100;
 
 //nastavljanje leve in desne tipke
 function onKeyDown(evt) {
@@ -91,10 +92,10 @@ function draw() {
   circle(x, y, 10);
   //premik ploščice levo in desno
   if(rightDown){
-if((paddlex+paddlew) < WIDTH){
+if((paddlex+paddlew) < WIDTH/2-mrezaW/2){
 paddlex += 5;
 }else{
-paddlex = WIDTH-paddlew;
+paddlex = paddlex;
 }
 }
 else if(leftDown){
@@ -112,14 +113,15 @@ paddlex2 = WIDTH-paddlew2;
 }
 }
 else if(leftDown2){
-if(paddlex2>0){
+if(paddlex2>WIDTH/2+mrezaW/2){
 paddlex2 -=5;
 }else{
-paddlex2=0;
+paddlex2=paddlex2;
 }
 }
 rect(paddlex, HEIGHT-paddleh, paddlew, paddleh,color1);
 rect(paddlex2, HEIGHT-paddleh2, paddlew2, paddleh2,color2);
+rect((WIDTH/2)-mrezaW/2,HEIGHT-mrezaH,mrezaW,mrezaH,"black");
 
   if (x + dx > WIDTH -r || x + dx < 0+r)
     dx = -dx;
@@ -127,19 +129,19 @@ rect(paddlex2, HEIGHT-paddleh2, paddlew2, paddleh2,color2);
     dy = -dy;
   if (y + dy > HEIGHT - r - paddleh) {
 
-  // preveri prvi plošček
+  
   if (x > paddlex && x < paddlex + paddlew) {
     dx = 8 * ((x - (paddlex + paddlew / 2)) / paddlew);
     dy = -dy;
   }
 
-  // preveri drugi plošček
+ 
   else if (x > paddlex2 && x < paddlex2 + paddlew2) {
     dx = 8 * ((x - (paddlex2 + paddlew2 / 2)) / paddlew2);
     dy = -dy;
   }
 
-  // če ne zadane nobenega → konec igre
+  
   else if (y + dy > HEIGHT - r) {
     clearInterval(intervalId);
   }
