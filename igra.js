@@ -20,16 +20,16 @@ function drawIt() {
   var prviDotik = 0;
   var color1 = "blue";
   var color2 = "red";
-  var mrezaW = 30;
+  var mrezaW = 20;
   var mrezaH = 100;
   var tocke1 = 0;
   var tocke2 = 0;
   var intervalId;
-  var maxRezultat = 2;
+  var maxRezultat = 5;
   var server = 1;
   var zacetekIgre = false;
   var bgImage = new Image();
-bgImage.src = 'slike/Ozadje.png';
+bgImage.src = 'slike/Ozadje2.png';
  
 
   function onKeyDown(evt) {
