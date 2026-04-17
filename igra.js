@@ -150,7 +150,7 @@ bgImage.src = 'slike/Ozadje2.png';
     dy = 4;
     tocke1 = 0;
     tocke2 = 0;
-    maxRezultat = 2;
+    maxRezultat = 5;
     server = 1;
     prviDotik = 0;
 
