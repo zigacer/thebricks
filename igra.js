@@ -29,6 +29,7 @@ function drawIt() {
   var server = 1;
   var zacetekIgre = false;
   var bgImage = new Image();
+  
 bgImage.src = 'slike/Ozadje2.png';
  
 
@@ -134,6 +135,18 @@ bgImage.src = 'slike/Ozadje2.png';
   }
 
   function zacniIgro() {
+	if (intervalId) clearInterval(intervalId);
+    x = 150;
+    y = 150;
+    dx = 0;
+    dy = 4;
+    tocke1 = 0;
+    tocke2 = 0;
+    maxRezultat = 5;
+    server = 1;
+    prviDotik = 0;
+    init_paddle();
+    init_paddle2();
     if (intervalId) clearInterval(intervalId);
     zacetekIgre = true;
     reset();
@@ -150,7 +163,7 @@ bgImage.src = 'slike/Ozadje2.png';
     dy = 4;
     tocke1 = 0;
     tocke2 = 0;
-    maxRezultat = 2;
+    maxRezultat = 5;
     server = 1;
     prviDotik = 0;
 
@@ -237,6 +250,7 @@ bgImage.src = 'slike/Ozadje2.png';
       dy = -dy;
 
     if (y + dy > HEIGHT - r - paddleh) {
+		
 
       if (x > paddlex && x < paddlex + paddlew) {
         dx = 8 * ((x - (paddlex + paddlew / 2)) / paddlew);
@@ -251,9 +265,9 @@ bgImage.src = 'slike/Ozadje2.png';
       }
 
       else if (y + dy > HEIGHT - r) {
-
+		
         if (x < mrezaX) {
-
+		
           tocke2++;
 
           if (tocke2 == maxRezultat) {
@@ -287,6 +301,7 @@ bgImage.src = 'slike/Ozadje2.png';
             clearInterval(intervalId);
 
             Swal.fire({
+			
               title: "Modri zmaga!",
               icon: "info",
               confirmButtonText: "OK"
@@ -297,6 +312,7 @@ bgImage.src = 'slike/Ozadje2.png';
             server = 2;
             clearInterval(intervalId);
             Swal.fire({
+
               title: "Točka za modrega!",
               icon: "info",
               confirmButtonText: "OK"
@@ -333,5 +349,5 @@ bgImage.src = 'slike/Ozadje2.png';
   init_paddle();
   init_paddle2();
   $("#gumbStart").on("click", zacniIgro);
-  $("#gumbReset").on("click", restartIgre);
+  
 }
