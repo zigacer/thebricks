@@ -29,7 +29,12 @@ function drawIt() {
   var server = 1;
   var zacetekIgre = false;
   var bgImage = new Image();
-  
+  var dvaIgralca = false;
+  var mocBota = 70;
+  var stevec;
+  var random;
+  var tempRandom;
+  var smer;
 bgImage.src = 'slike/Ozadje2.png';
  
 
@@ -135,7 +140,30 @@ bgImage.src = 'slike/Ozadje2.png';
   }
 
   function zacniIgro() {
+    stevec = 0;
 	if (intervalId) clearInterval(intervalId);
+	dvaIgralca = true;
+    x = 150;
+    y = 150;
+    dx = 0;
+    dy = 4;
+    tocke1 = 0;
+    tocke2 = 0;
+    maxRezultat = 5;
+    server = 1;
+    prviDotik = 0;
+    init_paddle();
+    init_paddle2();
+    if (intervalId) clearInterval(intervalId);
+    zacetekIgre = true;
+    reset();
+    posodobiRezultat();
+    intervalId = setInterval(draw, 10);
+  }
+  function zacniIgroBoti(){
+    stevec = 0;
+	  if (intervalId) clearInterval(intervalId);
+	dvaIgralca = false;
     x = 150;
     y = 150;
     dx = 0;
@@ -223,7 +251,7 @@ bgImage.src = 'slike/Ozadje2.png';
         paddlex = 0;
       }
     }
-
+if(dvaIgralca){
     if (rightDown2) {
       if ((paddlex2 + paddlew2) < WIDTH) {
         paddlex2 += 5;
@@ -238,6 +266,53 @@ bgImage.src = 'slike/Ozadje2.png';
         paddlex2 = paddlex2;
       }
     }
+}
+else{ 
+  //bot
+  if(stevec = 10){
+    stevec = 0;
+  }
+  if(stevec ==0){
+    tempRandom = 100-mocBota;
+  random =Math.floor(Math.random()*100+1); 
+  }
+  
+  
+  
+  if(random>=tempRandom){
+	if(x>paddlex2){
+		if ((paddlex2 + paddlew2) < WIDTH) {
+        paddlex2 += 5;
+      } else {
+        paddlex2 = WIDTH - paddlew2;
+      }
+	}
+	else if (x<paddlex2){
+		if (paddlex2 > WIDTH / 2 + mrezaW / 2) {
+        paddlex2 -= 5;
+      } else {
+        paddlex2 = paddlex2;
+      }
+	}
+}
+else{
+  	if(x>paddlex2){
+		if ((paddlex2 + paddlew2) < WIDTH) {
+        paddlex2 -= 5;
+      } else {
+        paddlex2 = WIDTH - paddlew2;
+      }
+	}
+	else if (x<paddlex2){
+		if (paddlex2 > WIDTH / 2 + mrezaW / 2) {
+        paddlex2 += 5;
+      } else {
+        paddlex2 = paddlex2;
+      }
+	}
+}
+stevec++;
+}
 
     rect(paddlex, HEIGHT - paddleh, paddlew, paddleh, color1);
     rect(paddlex2, HEIGHT - paddleh2, paddlew2, paddleh2, color2);
@@ -349,5 +424,6 @@ bgImage.src = 'slike/Ozadje2.png';
   init_paddle();
   init_paddle2();
   $("#gumbStart").on("click", zacniIgro);
+  $("#gumbBoti").on("click", zacniIgroBoti);
   
 }
