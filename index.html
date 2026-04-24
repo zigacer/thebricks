@@ -8,6 +8,7 @@
 </head>
 <body onload="drawIt()">
     <div class="ovoj">
+        <h1 style="margin:0; font-size:42px;">Odbojka</h1>
         <div class="rezultati">
             <div class="moder">MODRI: <span id="rezultatModri">0</span></div>
             <div class="rdec">RDEČI: <span id="rezultatRdeci">0</span></div>
@@ -16,23 +17,11 @@
         <canvas id="canvas" class="igralisce" width="1000" height="500"></canvas>
 
         <div class="gumbi">
-            <button id="gumbStart">2 Igralca</button>
-			<button id="gumbBoti">1 Igralec</button>
-        </div>
-        <div class="navodila">
-    <h3>Navodila</h3>
-    <p>
-        Igralec MODRI uporablja tipke <b>A</b> (levo) in <b>D</b> (desno)<br>
-        Igralec RDEČI uporablja puščici <b>←</b> in <b>→</b><br>
-        Cilj igre je odbiti žogo čez mrežo<br>
-        Ko žoga pade na tla nasprotnika, dobiš točko<br>
-        Zmaga igralec, ki prvi doseže vsaj 5 točk (mora pa zmagati z vsaj dvema točkama razlike)
-    </p>
-	<h3>Credits</h3>
-	<p>
-		Ustvaril: Žiga Černe Bralić
-	</p>
+    <button id="gumbStart">2 Igralca</button>
+    <button id="gumbBoti">1 Igralec</button>
+    <button id="gumbNavodila">Navodila</button>
 </div>
+        
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
