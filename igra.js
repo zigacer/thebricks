@@ -18,8 +18,8 @@ function drawIt() {
   var rightDown2 = false;
   var leftDown2 = false;
   var prviDotik = 0;
-  var color1 = "blue";
-  var color2 = "red";
+  var color1 = "#2B4F97";
+  var color2 = "#CC2622";
   var mrezaW = 20;
   var mrezaH = 100;
   var tocke1 = 0;
@@ -29,9 +29,32 @@ function drawIt() {
   var server = 1;
   var zacetekIgre = false;
   var bgImage = new Image();
-  
+  var dvaIgralca = false;
+  var mocBota = 85;
+  var stevec;
+  var random;
+  var tempRandom;
+  var smer;
 bgImage.src = 'slike/Ozadje2.png';
- 
+ document.getElementById("gumbNavodila").addEventListener("click", function () {
+    Swal.fire({
+        title: '🏐 Navodila',
+        html: `
+            <p><b style="color:#4da3ff;">MODRI</b>: A (levo), D (desno)</p>
+            <p><b style="color:#ff4d4d;">RDEČI</b>: ← →</p>
+            <hr>
+            <p>Cilj igre je odbiti žogo čez mrežo.</p>
+            <p>Ko žoga pade na tla nasprotnika, dobiš točko.</p>
+            <p>Zmaga igralec, ki prvi doseže 5 točk<br>(z vsaj 2 razlike).</p>
+            <hr>
+            <p style="font-size:12px;">Ustvaril: Žiga Černe Bralić</p>
+        `,
+        confirmButtonText: 'Zapri',
+        background: '#1e1e2f',
+        color: '#fff',
+        confirmButtonColor: '#4da3ff'
+    });
+});
 
   function onKeyDown(evt) {
     if (evt.keyCode == 39)
@@ -135,7 +158,31 @@ bgImage.src = 'slike/Ozadje2.png';
   }
 
   function zacniIgro() {
+    stevec = 0;
 	if (intervalId) clearInterval(intervalId);
+	dvaIgralca = true;
+    x = 150;
+    y = 150;
+    dx = 0;
+    dy = 4;
+    tocke1 = 0;
+    tocke2 = 0;
+    maxRezultat = 5;
+    server = 1;
+    prviDotik = 0;
+    init_paddle();
+    init_paddle2();
+    if (intervalId) clearInterval(intervalId);
+    zacetekIgre = true;
+    reset();
+    posodobiRezultat();
+    intervalId = setInterval(draw, 10);
+  }
+  function zacniIgroBoti(){
+    stevec = 0;
+    mocBota = 85;
+	  if (intervalId) clearInterval(intervalId);
+	dvaIgralca = false;
     x = 150;
     y = 150;
     dx = 0;
@@ -223,7 +270,7 @@ bgImage.src = 'slike/Ozadje2.png';
         paddlex = 0;
       }
     }
-
+if(dvaIgralca){
     if (rightDown2) {
       if ((paddlex2 + paddlew2) < WIDTH) {
         paddlex2 += 5;
@@ -238,6 +285,53 @@ bgImage.src = 'slike/Ozadje2.png';
         paddlex2 = paddlex2;
       }
     }
+}
+else{ 
+  //bot
+  if(stevec == 25){
+    stevec = 0;
+  }
+  if(stevec ==0){
+    tempRandom = 100-mocBota;
+  random =Math.floor(Math.random()*100+1); 
+  }
+  
+  
+  
+  if(random>=tempRandom){
+	if(x>paddlex2){
+		if ((paddlex2 + paddlew2) < WIDTH) {
+        paddlex2 += 5;
+      } else {
+        paddlex2 = WIDTH - paddlew2;
+      }
+	}
+	else if (x<paddlex2){
+		if (paddlex2 > WIDTH / 2 + mrezaW / 2) {
+        paddlex2 -= 5;
+      } else {
+        paddlex2 = paddlex2;
+      }
+	}
+}
+else{
+  	if(x<paddlex2){
+		if ((paddlex2 + paddlew2) < WIDTH) {
+        paddlex2 += 5;
+      } else {
+        paddlex2 = WIDTH - paddlew2;
+      }
+	}
+	else if (x>paddlex2){
+		if (paddlex2 > WIDTH / 2 + mrezaW / 2) {
+        paddlex2 -= 5;
+      } else {
+        paddlex2 = paddlex2;
+      }
+	}
+}
+stevec++;
+}
 
     rect(paddlex, HEIGHT - paddleh, paddlew, paddleh, color1);
     rect(paddlex2, HEIGHT - paddleh2, paddlew2, paddleh2, color2);
@@ -275,7 +369,10 @@ bgImage.src = 'slike/Ozadje2.png';
             Swal.fire({
               title: "Rdeči zmaga!",
               icon: "info",
-              confirmButtonText: "OK"
+               confirmButtonText: 'Zapri',
+        background: '#1e1e2f',
+        color: '#fff',
+        confirmButtonColor: '#4da3ff'
             });
           }
           else {
@@ -285,7 +382,10 @@ bgImage.src = 'slike/Ozadje2.png';
             Swal.fire({
               title: "Točka za rdečega!",
               icon: "info",
-              confirmButtonText: "OK"
+               confirmButtonText: 'Zapri',
+        background: '#1e1e2f',
+        color: '#fff',
+        confirmButtonColor: '#4da3ff'
             }).then(() => {
               reset();
               intervalId = setInterval(draw, 10);
@@ -304,18 +404,25 @@ bgImage.src = 'slike/Ozadje2.png';
 			
               title: "Modri zmaga!",
               icon: "info",
-              confirmButtonText: "OK"
+               confirmButtonText: 'Zapri',
+        background: '#1e1e2f',
+        color: '#fff',
+        confirmButtonColor: '#4da3ff'
             });
           }
           else {
 
             server = 2;
             clearInterval(intervalId);
+            mocBota++;
             Swal.fire({
 
               title: "Točka za modrega!",
               icon: "info",
-              confirmButtonText: "OK"
+              confirmButtonText: 'Zapri',
+        background: '#1e1e2f',
+        color: '#fff',
+        confirmButtonColor: '#4da3ff'
             }).then(() => {
               reset();
               intervalId = setInterval(draw, 10);
@@ -349,5 +456,6 @@ bgImage.src = 'slike/Ozadje2.png';
   init_paddle();
   init_paddle2();
   $("#gumbStart").on("click", zacniIgro);
+  $("#gumbBoti").on("click", zacniIgroBoti);
   
 }
